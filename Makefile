@@ -10,9 +10,13 @@ main: src/mandelbrot.o
 src/mandelbrot.o:
 	clang++ -c src/mandelbrot.cpp -o src/mandelbrot.o -I ./include
 
+# | true just means the command will always succeed and further steps will be
+# run, no matter what
 clean:
-	rm src/*.o
-	rm lib/*.dylib
+	rm src/*.o | true  
+	rm lib/*.dylib | true
+	rm lib/*.o | true
+	rm *.ppm | true
 
 # create a dynamic library on Mac OSX, verify with:
 #   $ file lib/libmandelbrot.dylib
@@ -26,3 +30,9 @@ lib/libmandelbrot.dylib:
 # the objects needed to compile this are found in the dylib at runtime and loaded into program memory then
 src/client: lib/libmandelbrot.dylib
 	clang++ src/client.cpp -o src/client -L ./lib -l mandelbrot -I ./include
+
+####### If you want to name your library an arbitrary name...
+# lib/whatever.o:
+# 	clang++ -dynamiclib -o lib/whatever.o src/mandelbrot.cpp -I ./include
+# src/client: lib/whatever.o
+# 	clang++ src/client.cpp -o src/client -L ./lib -I ./include -l whatever.o

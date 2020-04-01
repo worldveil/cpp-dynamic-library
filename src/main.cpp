@@ -2,6 +2,6 @@
 #include <string>
 
 int main() {
-    fractal::Mandelbrot m(400, 400);
+    fractal::Mandelbrot m(900, 900);
     m.writeToFile("test.ppm");
 }

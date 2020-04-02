@@ -13,10 +13,10 @@ src/mandelbrot.o:
 # | true just means the command will always succeed and further steps will be
 # run, no matter what
 clean:
-	rm src/*.o | true  
-	rm lib/*.dylib | true
-	rm lib/*.o | true
+	rm src/*.o | true
+	rm lib/* | true
 	rm *.ppm | true
+	touch lib/.gitkeep
 
 # create a dynamic library on Mac OSX, verify with:
 #   $ file lib/libmandelbrot.dylib
@@ -36,3 +36,9 @@ src/client: lib/libmandelbrot.dylib
 # 	clang++ -dynamiclib -o lib/whatever.o src/mandelbrot.cpp -I ./include
 # src/client: lib/whatever.o
 # 	clang++ src/client.cpp -o src/client -L ./lib -I ./include -l whatever.o
+
+lib/libmandelbrot_static.a: src/mandelbrot.o
+	ar rvs lib/libmandelbrot_static.a src/mandelbrot.o
+
+src/client_statically_linked: src/mandelbrot.o
+	clang++ src/client.cpp lib/libmandelbrot_static.a -o src/client_statically_linked -I ./include

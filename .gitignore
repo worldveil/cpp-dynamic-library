@@ -3,6 +3,7 @@
 .vscode
 *.ppm
 *.o
+*.a
 
 src/main
-src/client
+src/client*

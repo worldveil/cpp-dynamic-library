@@ -25,6 +25,15 @@ The nice thing about compiling your execuatable with a static binary is that it 
 $ make src/client_statically_linked
 $ ./src/client_statically_linked  # should still create "test.ppm"
 ```
+## Tools
+
+```shell
+# shows the libraries this executable depends on
+$ otool -L <binary-executable>
+
+# shows the symbols this object file / binary defines, and which are undefined and need a library to define
+$ nm -C <binary-executable>
+```
 
 ## What's the difference in our executables?
 
